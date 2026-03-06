@@ -1,6 +1,7 @@
 -- Script Banco de Dados - Projeto Pi
 
 /*
+Grupo 9
 Andre Nogueira Pissuto 03261021
 Bruna Marcelino 03261058
 Giulia Teixeira 03261036
@@ -10,24 +11,22 @@ Nicolas Ferro 03261041
 Rodrigo Suguiura 03261044
 */
 
-
-
-CREATE DATABASE hydracoffe;
-USE hydracoffe;
+CREATE DATABASE Hydracoffe;
+USE Hydracoffe;
 
 -- TABELA CLIENTE
 
-CREATE TABLE CLIENTE(
-	ID INT PRIMARY KEY AUTO_INCREMENT,
-    NOME VARCHAR(50) NOT NULL,
-    ENDERECO VARCHAR(100) NOT NULL,
+CREATE TABLE Cliente(
+	Id INT PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(50) NOT NULL,
+    Endereco VARCHAR(100) NOT NULL,
     CPF CHAR(14) NOT NULL UNIQUE,
-    EMAIL VARCHAR(50) NOT NULL UNIQUE,
-    TELEFONE VARCHAR(15) UNIQUE,
-    CONSTRAINT CHK_EMAIL CHECK (EMAIL LIKE '%@%')
+    Email VARCHAR(50) NOT NULL UNIQUE,
+    Telefone VARCHAR(15) UNIQUE,
+    CONSTRAINT CHK_Email CHECK (Email LIKE '%@%')
 );
 
-INSERT INTO CLIENTE (NOME, ENDERECO, CPF, EMAIL, TELEFONE) VALUES
+INSERT INTO Cliente (Nome, Endereco, CPF, Email, Telefone) VALUES
 ('João Silva', 'Fazenda Boa Vista, Patrocínio, MG', '123.456.789-00', 'joao.silva@email.com', '31999990001'),
 ('Maria Oliveira', 'Sítio Recanto Verde, Varginha, MG', '987.654.321-00', 'maria.oliveira@gmail.com', '31988880002'),
 ('Carlos Souza', 'Fazenda São José, Poços de Caldas, MG', '111.222.333-44', 'carlos.souza@hotmail.com', '35977770003'),
@@ -36,86 +35,86 @@ INSERT INTO CLIENTE (NOME, ENDERECO, CPF, EMAIL, TELEFONE) VALUES
 ('Beatriz Lima', 'Sítio Primavera, Campos do Jordão, SP', '222.333.444-55', 'beatriz.lima@gmail.com', '12944440006'),
 ('Lucas Fernandes', 'Fazenda Alta Vista, Manhuaçu, MG', '333.444.555-66', 'lucas.fernandes@email.com', '32933330007');
 
-SELECT * FROM cliente;
+SELECT * FROM Cliente;
 
 SELECT 
-CONCAT('Cliente ', NOME, ' localizado em ', ENDERECO, ' - ',
+CONCAT('Cliente ', Nome, ' localizado em ', Endereco, ' - ',
     CASE
-	WHEN ENDERECO LIKE '%MG%' THEN 'Região de alto potencial de café'
-	WHEN ENDERECO LIKE '%SP%' THEN 'Plantação em São Paulo'
-	WHEN ENDERECO LIKE '%ES%' THEN 'Plantação no Espírito Santo'
+	WHEN Endereco LIKE '%MG%' THEN 'Região de alto potencial de café'
+	WHEN Endereco LIKE '%SP%' THEN 'Plantação em São Paulo'
+	WHEN Endereco LIKE '%ES%' THEN 'Plantação no Espírito Santo'
 	ELSE 'Outra região'
     END
-) AS status_cliente
-FROM CLIENTE;
+) AS Status_cliente
+FROM Cliente;
 
--- TABELA LAVOURA
+-- TABELA EMPRESA
 
 
-CREATE TABLE lavoura(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    nomelavoura VARCHAR(50) NOT NULL UNIQUE,
-    cnpj char(18) NOT NULL UNIQUE,
-    produtividade DECIMAL(5,2) NOT NULL,
-    area INT NOT NULL
+CREATE TABLE Empresa(
+	Id INT PRIMARY KEY AUTO_INCREMENT,
+    Nome_Empresa VARCHAR(50) NOT NULL UNIQUE,
+    CNPJ char(18) NOT NULL UNIQUE,
+    Produtividade INT NOT NULL, /*Produtividade é correspondente a quantidade de sacas*/
+    Area_Plantacao INT NOT NULL
 );
 
-INSERT INTO lavoura (nomelavoura, cnpj, produtividade, area) VALUES
-('Fazenda Boa Safra', '12.345.678/0001-01', 320.50, 45),
-('Sítio Café Verde', '23.456.789/0001-12', 410.70, 30),
-('Fazenda Montanha do Café', '34.567.890/0001-23', 580.10, 55),
-('Fazenda Vale do Grão', '45.678.901/0001-34', 360.40, 40),
-('Sítio Aroma do Café', '56.789.012/0001-45', 305.90, 25),
-('Fazenda Alto Horizonte', '67.890.123/0001-56', 490.22, 60),
-('Fazenda Terra Fértil', '78.901.234/0001-67', 520.41, 35),
-('Sítio Café da Serra', '89.012.345/0001-78', 445.55, 28);
+INSERT INTO Empresa (Nome_Empresa, CNPJ, Produtividade, Area_Plantacao) VALUES
+('Fazenda Boa Safra', '12.345.678/0001-01', 320, 45),
+('Sítio Café Verde', '23.456.789/0001-12', 410, 30),
+('Fazenda Montanha do Café', '34.567.890/0001-23', 580, 55),
+('Fazenda Vale do Grão', '45.678.901/0001-34', 360, 40),
+('Sítio Aroma do Café', '56.789.012/0001-45', 305, 25),
+('Fazenda Alto Horizonte', '67.890.123/0001-56', 490, 60),
+('Fazenda Terra Fértil', '78.901.234/0001-67', 520, 35),
+('Sítio Café da Serra', '89.012.345/0001-78', 445, 28);
 
-SELECT * FROM lavoura;
+SELECT * FROM Empresa;
 
-SELECT nomelavoura, produtividade, CASE
-	WHEN produtividade >= 500 THEN 'Alta produtividade'
-	WHEN produtividade BETWEEN 400 AND 499.99 THEN 'Produtividade média'
+SELECT Empresa, Produtividade, CASE
+	WHEN Produtividade >= 500 THEN 'Alta produtividade'
+	WHEN Produtividade BETWEEN 400 AND 499 THEN 'Produtividade média'
 	ELSE 'Baixa produtividade'
-    END AS classificacao
-FROM lavoura;
+    END AS Classificacao
+FROM Empresa;
 
-SELECT CONCAT('A lavoura ', nomelavoura, ' possui ', area, 
-    ' hectares e produtividade de ', produtividade, ' sacas.') AS descricao
-FROM lavoura;
+SELECT CONCAT('A Empresa ', Nome_Empresa, ' possui ', Area_Plantacao, 
+    ' hectares e produtividade de ', Produtividade, ' sacas.') AS Descricao
+FROM Empresa;
 
-SELECT nomelavoura, 
-	CONCAT('Área: ', area, ' hectares') AS tamanho_area,
+SELECT Nome_Empresa, 
+	CONCAT('Área: ', Area_Plantacao, ' hectares') AS Tamanho_Area,
     CASE
-	WHEN area >= 50 THEN 'Lavoura grande'
-	WHEN area BETWEEN 30 AND 49 THEN 'Lavoura média'
+	WHEN Area_Plantacao >= 50 THEN 'Lavoura grande'
+	WHEN Area_Plantacao BETWEEN 30 AND 49 THEN 'Lavoura média'
 	ELSE 'Lavoura pequena'
-    END AS classificacao_area
-FROM lavoura;
+    END AS Classificacao_Area
+FROM Empresa;
 
-SELECT nomelavoura, area,
+SELECT Nome_Empresa, Area_Plantacao,
     CASE
-	WHEN area >= 50 THEN 'Grande'
-    WHEN area BETWEEN 35 AND 49 THEN 'Média'
+	WHEN Area_Plantacao >= 50 THEN 'Grande'
+    WHEN Area_Plantacao BETWEEN 35 AND 49 THEN 'Média'
 	ELSE 'Pequena'
-    END AS tamanho_lavoura
-FROM lavoura;
+    END AS Tamanho_Empresa
+FROM Empresa;
 
-DESCRIBE lavoura;
+DESCRIBE Empresa;
 
 
 -- TABELA SENSORES
 
-CREATE TABLE sensores(
-	id INT PRIMARY KEY AUTO_INCREMENT,
-    umidadeDetectada INT,
-    setor VARCHAR(50) NOT NULL
+CREATE TABLE Sensores(
+	Id INT PRIMARY KEY AUTO_INCREMENT,
+    Umidade_Detectada INT,
+    Setor VARCHAR(50) NOT NULL
     );
 
-ALTER TABLE sensores RENAME COLUMN setor TO hectare;
+ALTER TABLE Sensores RENAME COLUMN Setor TO Hectare;
 
-DESCRIBE sensores;
+DESCRIBE Sensores;
 
-INSERT INTO sensores (umidadeDetectada, hectare) VALUES
+INSERT INTO Sensores (Umidade_Detectada, Hectare) VALUES
 (42, 'A1'),
 (45, 'A2'),
 (47, 'A3'),
@@ -137,16 +136,15 @@ INSERT INTO sensores (umidadeDetectada, hectare) VALUES
 (60, 'E3'),
 (58, 'E4');
 
-SELECT * FROM sensores;
+SELECT * FROM Sensores;
 
-SELECT CONCAT('Coordenada [', hectare, ']') AS localizacao,
-umidadeDetectada FROM sensores;
+SELECT CONCAT('Coordenada [', Hectare, ']') AS Localizacao,
+Umidade_Detectada FROM Sensores;
 
-SELECT CONCAT('Setor ', hectare, ' - Umidade: ', umidadeDetectada, '% - ') as 'umidade detectada',
+SELECT CONCAT('Setor ', Hectare, ' - Umidade: ', Umidade_Detectada, '% - ') as 'Umidade detectada',
     CASE
-	WHEN umidadeDetectada < 40 THEN 'Necessita irrigação'
-	WHEN umidadeDetectada BETWEEN 40 AND 55 THEN 'Umidade adequada'
+	WHEN Umidade_Detectada < 40 THEN 'Necessita irrigação'
+	WHEN Umidade_Detectada BETWEEN 40 AND 55 THEN 'Umidade adequada'
 	ELSE 'Solo muito úmido'
-    END AS status_sensor
-FROM sensores;
-
+    END AS Status_Sensor
+FROM Sensores;
