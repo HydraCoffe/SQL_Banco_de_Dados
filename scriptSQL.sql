@@ -145,8 +145,8 @@ FROM Sensores;
 SELECT 
 	CONCAT('Setor ', Hectare, ' - Umidade: ', Umidade_Detectada, '% - ') as 'Umidade detectada',
     CASE
-	WHEN Umidade_Detectada < 54 THEN 'Necessita irrigação'
-	WHEN Umidade_Detectada BETWEEN 55 AND 80 THEN 'Umidade adequada'
+	WHEN Umidade_Detectada < 59 THEN 'Necessita irrigação'
+	WHEN Umidade_Detectada BETWEEN 60 AND 80 THEN 'Umidade adequada'
 	ELSE 'Solo muito úmido'
     END AS Status_Sensor
 FROM Sensores;
